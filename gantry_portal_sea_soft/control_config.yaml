@@ -1,38 +1,79 @@
 controller:
   motion_law_parameters:
-    max_velocity: [ 0.35, 0.35, 0.35 ]
-    max_acceleration: [ 0.2, 0.2, 0.2 ]
+    max_velocity: [0.50, 0.50, 0.50]
+    max_acceleration: [0.20, 0.20, 0.20]
+
   cascade_controllers:
-  - name: "joint1"
-    inner:
-      Kp: 25.0
-      Ki: 2.0
-      Kd: 0.0
-    outer:
-      Kp: 5.0
-      Ki: 0.0
-      Kd: 0.0
-  - name: "joint2"
-    inner:
-      Kp: 40.0
-      Ki: 1.0
-      Kd: 0.0
-    outer:
-      Kp: 5.0
-      Ki: 0.0
-      Kd: 0.0
-  - name: "joint3"
-    inner:
-      Kp: 25.0
-      Ki: 5.0
-      Kd: 0.0
-    outer:
-      Kp: 10.0
-      Ki: 0.0
-      Kd: 0.0
+    - name: "joint1"
+      inner:
+# wc = 30
+        Kp: 79.6
+        Ki: 119.3
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.006
+        filters_on_derivative_error:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.004
+          - type: NotchFilter
+            natural_frequency: 620.0
+            zeros_damping: 0.1
+            poles_damping: 0.4
+      outer:
+        Kp: 3.0
+        Ki: 0.0
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.02
+
+    - name: "joint2"
+      inner:
+# wc = 30
+        Kp: 51.45
+        Ki: 77.14
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.007
+        filters_on_derivative_error:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.004
+          - type: NotchFilter
+            natural_frequency: 750.0
+            zeros_damping: 0.1
+            poles_damping: 0.4
+      outer:
+        Kp: 2.5
+        Ki: 0.0
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.02
+
+    - name: "joint3"
+      inner:
+# wc = 30
+        Kp: 29.13
+        Ki: 43.7
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.006
+        filters_on_derivative_error:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.004
+      outer:
+        Kp: 2.0
+        Ki: 0.0
+        Kd: 0.0
+        filters_on_measure:
+          - type: FirstOrderLowPassFilter
+            time_constant: 0.02
 
 model_parameters:
-- -0.578906
+- -0.996306
 - 0.000000
 - -0.000000
 - 0.000000
@@ -42,7 +83,7 @@ model_parameters:
 - 0.000000
 - 0.000000
 - 0.000000
-- -1.582050
+- -2.099957
 - 0.000000
 - 0.000000
 - 0.000000
@@ -52,7 +93,7 @@ model_parameters:
 - 0.000000
 - 0.000000
 - 0.000000
-- 0.961900
+- 0.961833
 - 0.000000
 - 0.000000
 - 0.000000
@@ -62,13 +103,9 @@ model_parameters:
 - 0.000000
 - 0.000000
 - 0.000000
-- 0.087673
-- 0.477539
-- 0.114431
-- -0.019388
-- -0.057542
-- -0.023347
-
-
-
-
+- 0.097239
+- 0.499577
+- 0.226003
+- -0.030743
+- -0.084320
+- -0.065393
