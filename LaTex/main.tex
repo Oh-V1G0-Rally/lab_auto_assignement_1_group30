@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper,oneside]{report}
+
+% Lingua e codifica
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Impaginazione compatta
+\usepackage[a4paper,top=1.6cm,bottom=1.8cm,left=1.6cm,right=1.6cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.0}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% =========================
+% PRIMA PAGINA COMPATTA
+% =========================
+\begin{titlepage}
+    \centering
+    {\large Università degli Studi di Brescia\par}
+    {\normalsize Laboratorio di Automatica -- A.A. 2025/2026\par}
+    \vspace{1.2cm}
+
+    {\LARGE \textbf{Relazione Tecnica}\par}
+    \vspace{0.2cm}
+    {\Large Assignment 1 -- Gantry Crane con SEA\par}
+    \vspace{1cm}
+
+    {\normalsize \textbf{Gruppo:} 30\par}
+    {\normalsize \textbf{Componente:} Alessandro Vigorelli\par}
+
+    \vspace{1.2cm}
+    {\normalsize \textbf{Introduzione}\par}
+Questo documento riassume il lavoro svolto per la prima parte dell'elaborato richiesto nel corso di Laboratorio di Automatica,
+dedicato al controllo di un sistema gantry con attuatori elastici in serie (SEA) in ambiente di simulazione. 
+L'obiettivo generale è ottenere un controllo stabile e robusto, che riesca a seguire la traiettoria attraverso degli ostacoli posti nel minor tempo 
+possibile senza collisioni.
+
+\textbf{Obiettivi principali:}
+\begin{itemize}
+    \item identificare i modelli dinamici dei tre giunti mediante test con segnale chirp;
+    \item validare i modelli ottenuti confrontando la risposta identificata con i dati simulati;
+    \item progettare e tarare il controllo in cascata, composto da anello interno di velocità
+    e anello esterno di posizione;
+    \item introdurre filtri low-pass e notch per attenuare rumore e risonanze elastiche;
+    \item integrare la compensazione feedforward tramite parametri dinamici identificati;
+    \item aumentare progressivamente velocità e accelerazione mantenendo stabilità,
+    accuratezza e robustezza;
+    \item valutare quantitativamente le prestazioni tramite errori di inseguimento,
+    tempo ciclo e sollecitazioni massime.
+\end{itemize}
+
+Il problema tecnico centrale consiste nel bilanciare aggressività del controllo e precisione: aumentando velocità, accelerazione
+ si riduce il tempo ciclo, ma cresce il rischio di oscillazioni, 
+sensibilità al rumore e perdita di accuratezza locale lungo il percorso tra degli ostacoli. 
+Nelle sezioni successive verranno presentati metodo, risultati sperimentali in simulazione 
+e criteri di scelta della configurazione finale.
+\end{titlepage}
+
+\section{Identificazione e validazione dei modelli}
+
+
+
+\section{Taratura del controllo in cascata}
+
+\section{Filtri e compensazione feedforward}
+
+\section{Simulazioni e confronto prestazionale}
+
+\section{Configurazione finale e conclusioni}
+
+\end{document}
