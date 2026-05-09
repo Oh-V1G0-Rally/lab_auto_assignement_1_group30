@@ -245,16 +245,28 @@ giustificando la scelta di utilizzare quest'ultimo modello per le successive fas
 \end{figure}
 
 \section{Taratura Manuale, Filtro Notch e Feedforward}
-La fase iniziale di progetto del sistema di controllo è stata impostata adottando una classica architettura in cascata, separando chiaramente i compiti:
+Il sistema è modellabile come un robot a corpo rigido con molteplici giunti. 
+Attraverso anche la risposta in frequenza si osserva alta rigidezza meccanica, garantendo un minor ritardo 
+nella trasmissione del moto e una risposta al comando di coppia più prevedibile. 
+Le frequenze di risonanza si collocano tipicamente ad alte frequenze, spesso al di fuori della banda utile del controllore, 
+risultando così più facilmente gestibili. Ciò rende il modello dinamico estremamente affidabile, poiché i parametri identificati 
+(come masse e inerzie) hanno un impatto diretto e reale, sebbene permanga una certa sensibilità a eventuali attriti o backlash 
+alle basse velocità.
+Ogni giunto usa un controllore in cui ritroviamo un'architettura in cascata, 
+utilizzata per separare i seguenti compiti:
 \begin{itemize}
     \item un \textbf{anello interno di velocità}, controllato da un regolatore PI (Proporzionale-Integrale) per garantire una reiezione rapida dei disturbi;
     \item un \textbf{anello esterno di posizione}, governato da un controllore prevalentemente P (Proporzionale), con dinamiche volutamente più lente.
 \end{itemize}
 
 \subsection*{Prime prove e taratura approssimata}
-In primis, è stata effettuata una taratura del tutto spannometrica e approssimata, il cui scopo principale era verificare la corretta implementazione e interazione della compensazione feedforward. Va infatti precisato che l'azione di feedforward era stata erroneamente mantenuta attiva fin dall'inizio delle prove, influenzando la dinamica di base.
+In primis, è stata effettuata una taratura approssimata, il cui scopo principale era verificare la corretta 
+implementazione e interazione della compensazione feedforward. Va infatti precisato che l'azione di feedforward 
+era stata erroneamente mantenuta attiva fin dall'inizio delle prove, influenzando la dinamica di base.
 
-I parametri dinamici necessari al feedforward sono stati calcolati eseguendo inizialmente lo script \texttt{identificazione\_parametri\_dinamici\_calclo\_T}. Successivamente, lo script \texttt{identificazione\_parametri\_dinamici} è stato eseguito ciclicamente ad ogni modifica strutturale importante, ottenendo così una prima bozza del controllore.
+I parametri dinamici necessari al feedforward sono stati calcolati eseguendo inizialmente lo script \newline
+\texttt{IdentificazioneParametriDinamici\_calcolo\_di\_T}. \newline
+Successivamente, lo script \texttt{IdentificazioneParametriDinamici\_calcolo\_dei\_parametri} è stato eseguito ciclicamente ad ogni modifica strutturale importante, ottenendo così una prima bozza del controllore.
 
 Al fine di garantire che il controllo non risultasse eccessivamente aggressivo nelle fasi preliminari, i parametri di guadagno e i limiti cinematici sono stati impostati su valori fortemente conservativi. Nella Tabella \ref{tab:taratura_manuale} è riportato il confronto tra i parametri di base e quelli utilizzati per il primo test funzionale.
 
@@ -280,7 +292,13 @@ Al fine di garantire che il controllo non risultasse eccessivamente aggressivo n
     \end{tabular}
 \end{table}
 
-I risultati di questa prima prova sono visibili in Figura \ref{fig:par_din_manuale}. Avendo imposto limiti di velocità molto bassi, i segnali di velocità acquisiti risultavano di entità ridotta. Di conseguenza, il rapporto segnale/rumore si è rivelato critico: il segnale grezzo riportava una componente di disturbo ad alta frequenza molto marcata. Inoltre, una grave mancanza che ha limitato le velocità massime raggiungibili in queste prime prove è imputabile all'inadeguatezza del modello iniziale utilizzato per il giunto J3.
+I risultati di questa prima prova sono visibili in Figura \ref{fig:par_din_manuale}. 
+Avendo imposto limiti di velocità molto bassi, i segnali di velocità acquisiti risultavano 
+di entità ridotta. Di conseguenza, il rapporto segnale/rumore si è rivelato critico: 
+il segnale grezzo riportava una componente di disturbo ad alta frequenza molto marcata. 
+Inoltre, una grave mancanza che ha limitato le velocità massime raggiungibili in queste 
+prime prove è imputabile all'inadeguatezza del modello iniziale utilizzato 
+per il giunto J3.
 
 \begin{figure}[H]
     \centering
@@ -300,36 +318,110 @@ I risultati di questa prima prova sono visibili in Figura \ref{fig:par_din_manua
 \end{figure}
 
 \subsection*{Studio della banda passante ed evoluzione dei guadagni}
-Superata la fase preliminare, si è proceduto alla taratura manuale dell'anello interno. Fissata la dinamica coppia-velocità, è stata imposta una pulsazione di taglio $\omega_c$ target. 
-Sfruttando il giunto J1 come riferimento, sono state testate tre condizioni principali:
-\begin{itemize}
-    \item $\omega_c = 20$ rad/s: comportamento molto robusto ma eccessivamente conservativo (Margine di Fase molto alto, circa $86^\circ$).
-    \item $\omega_c = 30$ rad/s: un buon compromesso tra reattività e robustezza.
-    \item $\omega_c = 60$ rad/s: comparsa di criticità in prossimità dei picchi risonanti (con pericolosi avvicinamenti allo 0 dB), riducendo i margini di stabilità pratici.
-\end{itemize}
+Superata la fase preliminare, si è proceduto alla taratura manuale dell'anello interno. 
+Testando diverse pulsazioni di taglio $\omega_c$ target per la dinamica coppia-velocità 
+(utilizzando il giunto J1 come riferimento), si è ricercato un compromesso ottimale tra reattività e robustezza. 
+Una pulsazione $\omega_c \approx 30$ rad/s si è rivelata una scelta equilibrata per questa fase, 
+superando l'eccessivo conservatorismo delle prime prove e mantenendo adeguati margini di stabilità. 
+Di conseguenza, i guadagni sono stati incrementati a valori sensibilmente più alti rispetto al "Test 1" 
+(es. J1: $K_p \approx 79.6$, $K_i \approx 119.3$; J2: $K_p \approx 51.4$, $K_i \approx 77.1$; J3: $K_p \approx 29.1$, $K_i \approx 43.7$).
 
-Questa indagine ha guidato la scelta verso un \textit{inner loop} più aggressivo ma pur sempre robusto ($\omega_c \approx 30$ rad/s), portando i guadagni a valori sensibilmente più alti rispetto alla "Test 1" (es. J1: $K_p \approx 79.6$, $K_i \approx 119.3$; J2: $K_p \approx 51.4$, $K_i \approx 77.1$; J3: $K_p \approx 29.1$, $K_i \approx 43.7$).
-
-Parallelamente, l'anello esterno è stato accordato applicando la regola empirica della separazione delle decadi (banda passante circa $1/10$ di quella interna), impostando unicamente l'azione proporzionale ($K_p$ tra $2.0$ e $3.0$) e azzerando l'azione integrale. Questa accortezza ha minimizzato le interazioni indesiderate tra i due anelli.
+Parallelamente, l'anello esterno è stato accordato applicando la regola empirica della 
+separazione delle decadi (banda passante circa $1/10$ di quella interna). Per minimizzare le interazioni 
+indesiderate tra i due anelli di controllo, si è utilizzata unicamente l'azione proporzionale ($K_p$ tra $2.0$ e $3.0$), 
+azzerando l'azione integrale.
 
 \subsection*{Introduzione del Filtro Notch}
-Con l'aumento delle prestazioni, l'analisi in frequenza ha reso palese l'effetto destabilizzante delle risonanze elastiche della meccanica (SEA). Per mitigare il problema è stato introdotto un \textbf{Filtro Notch} nel ramo più sensibile al contenuto ad alta frequenza (\texttt{filters\_on\_derivative\_error}).
+Nei test successivi con l'aumento delle prestazioni, l'analisi in frequenza ha reso 
+palese l'effetto delle risonanze. Per mitigare il problema è stato introdotto un 
+\textbf{Filtro Notch} nel punto più sensibile al contenuto ad alta frequenza ovvero usando 
+nel controllore l'attributo (\texttt{filters\_on\_derivative\_error}).
 
-Il filtro è stato centrato in corrispondenza del picco risonante dominante di ciascun giunto, impostando gli smorzamenti ($\xi_z, \xi_p$) in modo da bilanciare la profondità di attenuazione e la robustezza, evitando notch eccessivamente stretti che risulterebbero sensibili alle incertezze parametriche. Tipici valori utilizzati sono stati:
+Il filtro è stato centrato in corrispondenza del picco risonante dominante di ciascun giunto, impostando gli smorzamenti ($\xi_z, \xi_p$)
+in modo da bilanciare la profondità di attenuazione e la robustezza. 
+Valori utilizzati sono stati:
 \begin{itemize}
     \item \textbf{J1:} $\omega_n \approx 620$ rad/s, $\xi_z \approx 0.1$, $\xi_p \approx 0.4$
     \item \textbf{J2:} $\omega_n \approx 750$ rad/s, $\xi_z \approx 0.1$, $\xi_p \approx 0.4$
+    \item \textbf{J3:} $\omega_n \approx 715$ rad/s, $\xi_z \approx 0.1$, $\xi_p \approx 0.4$
 \end{itemize}
 
+\newpage
 \section{Taratura Ottimale}
-L'approccio manuale descritto in precedenza si è rivelato fondamentale per delineare i limiti della dinamica reale: ha permesso di isolare le bande critiche, quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia dell'intero sistema. Risolta l'incongruenza su J3 tramite una ri-identificazione, il passaggio alla sintesi tramite ottimizzazione analitica è risultato naturale.
 
-Sfruttando lo script \texttt{taratura\_ottima.mlx}, il problema di controllo è stato riformulato imponendo vincoli espliciti su:
+L'approccio manuale descritto in precedenza si è rivelato fondamentale per delineare i limiti della dinamica reale: ha permesso di isolare le bande critiche, quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia dell'intero sistema. 
+
+Al fine di superare tali limiti, è stata effettuata una ri-identificazione del giunto J3 utilizzando un segnale chirp con ampiezza ridotta a 10, frequenza da $0.1$ a $300$ Hz, durata estesa a 120 s e incrementando l'ordine del modello a 4. Scegliendo pesi adeguati (banda $[13, 1300]$ rad/s), è stato possibile ottenere una stima molto più affidabile della dinamica, che ha abilitato una pulsazione target $\omega_c = 100$ rad/s.
+
+Risolta l'incongruenza su J3, il problema di controllo per l'anello interno di velocità è stato riformulato sfruttando lo script \texttt{taratura\_ottima.mlx}. Quest'ultimo modella la taratura come un'ottimizzazione vincolata nel dominio della frequenza, imponendo restrizioni esplicite su:
 \begin{itemize}
-    \item \textbf{Robustezza:} imposizione di limiti sul picco della funzione di sensibilità ($M_s$) e sul Margine di Fase ($PM$).
-    \item \textbf{Reiezione disturbi:} attenuazione richiesta a bassa frequenza (es. $\approx 0.15$ per $\omega < 2$ rad/s).
-    \item \textbf{Attenuazione rumore:} abbattimento del guadagno ad alta frequenza (es. $\approx 0.1$ per $\omega > 400$ rad/s).
+    \item \textbf{Robustezza:} imposizione di un limite sul picco della funzione di sensibilità ($M_s \le 1.6$) e di un Margine di Fase minimo desiderato ($PM \ge 55^\circ$).
+    \item \textbf{Reiezione ai disturbi:} attenuazione richiesta a bassa frequenza (limite $\le 0.15$ per $\omega \le 2$ rad/s).
+    \item \textbf{Attenuazione del rumore:} abbattimento del guadagno ad alta frequenza (limite $\le 0.1$ per $\omega \ge 400$ rad/s).
 \end{itemize}
+
+Sono state esplorate molteplici configurazioni per innalzare la banda passante, riassunte nella Tabella \ref{tab:taratura_ottimale}. Partendo da prove esplorative (T0, T1, T2), i parametri di ottimizzazione e degli smorzamenti dei filtri notch ($\xi_p$) sono stati raffinati fino a giungere alla configurazione finale (T3, T4, T6).
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \caption{Parametri di configurazione e risultati della taratura ottima per i diversi test.}
+    \label{tab:taratura_ottimale}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{l|cc|cc|cc}
+    \toprule
+    \textbf{Parametro} & \textbf{T0 (J1)} & \textbf{T3 (J1)} & \textbf{T1 (J2)} & \textbf{T4 (J2)} & \textbf{T2 (J3)} & \textbf{T6 (J3 final)} \\
+    \midrule
+    $\omega_n$ [rad/s] & 620 & 620 & 750 & 750 & 715 & 715 \\
+    $\xi_z$ & 0.1 & 0.1 & 0.1 & 0.1 & 0.1 & 0.1 \\
+    $\xi_p$ & 0.4 & 0.5 & 0.4 & 0.5 & 0.4 & 0.4 \\
+    $\omega_c$ target [rad/s] & 45 & 200 & 45 & 200 & 50 & 100 \\
+    $PM$ target [$^\circ$] & 55 & 55 & 55 & 55 & 55 & 55 \\
+    $M_s$ max & 1.6 & 1.6 & 1.6 & 1.6 & 1.6 & 1.6 \\
+    Att. dist. / $\omega_{low}$ & 0.15 / 2.0 & 0.15 / 2.0 & 0.15 / 2.0 & 0.15 / 2.0 & 0.15 / 2.0 & 0.15 / 2.0 \\
+    Att. rumore / $\omega_{high}$ & 0.1 / 400 & 0.1 / 400 & 0.1 / 400 & 0.1 / 400 & 0.1 / 400 & 0.1 / 400 \\
+    \midrule
+    \textbf{Risultati} & & & & & & \\
+    $K_p$ inner & 46.45 & 55.56 & 34.42 & 41.11 & 43.84 & 50.97 \\
+    $K_i$ inner & 640.98 & 877.84 & 541.18 & 740.29 & 20.85 & 5.10 \\
+    $GM$ [dB] & 32.1 & 30.8 & 30.5 & 29.2 & 29.9 & 25.6 \\
+    $PM$ [$^\circ$] & 55.0 & 55.0 & 55.0 & 55.0 & 85.6 & 85.0 \\
+    \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+Il raggiungimento di margini di stabilità solidi a frequenze così elevate si è tradotto in un drastico miglioramento delle prestazioni sul campo. Rispetto alla casistica in cui si operava con il vecchio modello di J3 (con limiti $\omega_c = [200, 200, 50]$ rad/s, velocità massime di $[5.0, 5.0, 2.5]$ m/s e accelerazioni massime di $[2.5, 2.5, 1.0]$ m/s$^2$), il tempo ciclo ammontava a $23.90$ s. 
+Con il nuovo modello e l'architettura ottimizzata, la banda è stata estesa a $\omega_c = [200, 200, 100]$ rad/s, rendendo possibile innalzare i limiti cinematici a velocità massime di $[15.0, 15.0, 15.0]$ m/s e accelerazioni di $[14.0, 14.0, 14.0]$ m/s$^2$. Questo ha permesso di completare il percorso con un tempo ciclo pari a soli $12.93$ s.
+
+Nella Figura \ref{fig:bode_ottima} vengono mostrati i diagrammi di Bode in anello aperto delle configurazioni finali, confermando l'efficacia del filtro notch nell'isolare le risonanze ad alta frequenza e il rispetto dei vincoli imposti sull'attenuazione.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/Taratura_Ottimale/TarOtt_T3_J1.png}
+        \caption{Giunto J1 - T3}
+    \end{subfigure}
+    
+    \vspace{0.4cm}
+    
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/Taratura_Ottimale/TarOtt_T4_J2.png}
+        \caption{Giunto J2 - T4}
+    \end{subfigure}
+    
+    \vspace{0.4cm}
+    
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/Taratura_Ottimale/TarOtt_T6_J3.png}
+        \caption{Giunto J3 - T6}
+    \end{subfigure}
+    \caption{Risultati dell'ottimizzazione del loop shaping nel dominio della frequenza. Si apprezza l'inserimento del filtro notch ad alta frequenza per prevenire l'instabilità delle risonanze meccaniche.}
+    \label{fig:bode_ottima}
+\end{figure}
 
 \section{Simulazioni e confronto prestazionale}
 
