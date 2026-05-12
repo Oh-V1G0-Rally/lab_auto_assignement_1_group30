@@ -42,7 +42,7 @@
     \vspace{1.2cm}
     {\normalsize \textbf{Introduzione}\par}
 Questo documento riassume il lavoro svolto per la prima parte dell'elaborato richiesto nel corso di Laboratorio di Automatica,
-dedicato al controllo di un sistema gantry con attuatori elastici in serie (SEA) in ambiente di simulazione. 
+dedicato al controllo di un sistema gantry con attuatori elastici in serie (SEA). 
 L'obiettivo generale è ottenere un controllo stabile e robusto, che riesca a seguire la traiettoria attraverso degli ostacoli posti nel minor tempo 
 possibile senza collisioni.
 
@@ -52,12 +52,12 @@ possibile senza collisioni.
     \item validare i modelli ottenuti confrontando la risposta identificata con i dati simulati;
     \item progettare e tarare il controllo in cascata, composto da anello interno di velocità
     e anello esterno di posizione;
-    \item introdurre filtri low-pass e notch per attenuare rumore e risonanze elastiche;
+    \item introdurre filtri low-pass e notch per attenuare rumore e risonanze;
     \item integrare la compensazione feedforward tramite parametri dinamici identificati;
     \item aumentare progressivamente velocità e accelerazione mantenendo stabilità,
     accuratezza e robustezza;
     \item valutare quantitativamente le prestazioni tramite errori di inseguimento,
-    tempo ciclo e sollecitazioni massime.
+    tempo ciclo.
 \end{itemize}
 
 Il problema tecnico centrale consiste nel bilanciare aggressività del controllo e precisione: aumentando velocità, accelerazione
@@ -94,7 +94,7 @@ risonanze e la robustezza del modello rispetto a differenti condizioni di prova.
     T01 & J1 & 40 & 0.1 & 500 & 60  & [20, 2700] & 300 & 650 & 3\\
     T02 & J2 & 40 & 0.1 & 500 & 60  & [20, 2700] & 350 & 800 & 3\\
     T03 & J3 & 40 & 0.1 & 500 & 60  & [20, 2700] & 550 & 750 & 3\\
-    T04 & J3 & 15 & 0.1 & 300 & 120 & [20, 1500] & 550 & 750 & 4\\
+    T04 & J3 & 15 & 0.1 & 300 & 60 & [20, 1500] & 550 & 750 & 4\\
     \bottomrule
     \end{tabular}
     }
@@ -141,11 +141,11 @@ risonanze e la robustezza del modello rispetto a differenti condizioni di prova.
     \label{fig:all_ident}
 \end{figure}
 
-Lo svolgimento delle prove ha richiesto in primo luogo la definizione di una banda di frequenze adeguata,
+Lo svolgimento delle prove ha richiesto in primo luogo la definizione di una banda di frequenze e ampiezza adeguata,
  al fine di eccitare la dinamica dei giunti senza indurre saturazioni, 
 ponendo particolare attenzione nell'identificare i picchi di risonanza e anti-risonanza. Posizionando i pesi almeno una decade al di sotto e al 
 di sopra di questi picchi, è stato possibile ottenere una stima più accurata della dinamica del sistema, in prove successive
-per ottenere prestazioni una $\omega_c$ migliore identificheremo una finestra dei pesi più precisa.
+per ottenere $\omega_c$ migliore identificheremo una finestra dei pesi più precisa.
 
 In prima battuta, i modelli ottenuti nei Test T01, T02 e T03 presentavano una buona coerenza generale, pur evidenziando alcune 
 discrepanze in corrispondenza delle frequenze di risonanza. In particolare, come si osserverà nella fase di validazione, 
@@ -246,7 +246,7 @@ giustificando la scelta di utilizzare quest'ultimo modello per le successive fas
 
 \section{Taratura Manuale, Filtro Notch e Feedforward}
 Il sistema è modellabile come un robot a corpo rigido con molteplici giunti. 
-Attraverso anche la risposta in frequenza si osserva alta rigidezza meccanica, garantendo un minor ritardo 
+Attraverso anche la risposta in frequenza si osserva \textbf{alta rigidezza} meccanica, garantendo un minor ritardo 
 nella trasmissione del moto e una risposta al comando di coppia più prevedibile. 
 Le frequenze di risonanza si collocano tipicamente ad alte frequenze, spesso al di fuori della banda utile del controllore, 
 risultando così più facilmente gestibili. Ciò rende il modello dinamico estremamente affidabile, poiché i parametri identificati 
@@ -318,7 +318,7 @@ per il giunto J3.
 \end{figure}
 
 \subsection*{Studio della banda passante ed evoluzione dei guadagni}
-Superata la fase preliminare, si è proceduto alla taratura manuale dell'anello interno. 
+Superata la fase preliminare, si è proceduto alla \textbf{taratura manuale} dell'anello interno. 
 Testando diverse pulsazioni di taglio $\omega_c$ target per la dinamica coppia-velocità 
 (utilizzando il giunto J1 come riferimento), si è ricercato un compromesso ottimale tra reattività e robustezza. 
 Una pulsazione $\omega_c \approx 30$ rad/s si è rivelata una scelta equilibrata per questa fase, 
@@ -330,6 +330,18 @@ Parallelamente, l'anello esterno è stato accordato applicando la regola empiric
 separazione delle decadi (banda passante circa $1/10$ di quella interna). Per minimizzare le interazioni 
 indesiderate tra i due anelli di controllo, si è utilizzata unicamente l'azione proporzionale ($K_p$ tra $2.0$ e $3.0$), 
 azzerando l'azione integrale.
+
+Nella valutazione della robustezza delle tarature i due principali indicatori di stabilità sono:
+\begin{itemize}
+    \item \textbf{Margine di Fase (PM):} rappresenta la tolleranza del sistema prima di diventare instabile
+     a livello di fase. La zona ottimale è compresa tra i $45^\circ$ e i $60^\circ$. 
+     Sotto i $35^\circ$ il sistema rischia forti oscillazioni, mentre sopra gli $80^\circ$ risulta troppo lento. 
+    \item \textbf{Margine di Guadagno (GM):} indica di quanto è possibile moltiplicare 
+    il guadagno del controllore prima di perdere la stabilità. Il minimo accettabile è $> 6$ dB, 
+    se $> 20$ dB indicano una robustezza eccellente. 
+\end{itemize}
+La taratura manuale attuale preseta un PM $\approx 86^\circ$ e un GM $\approx 30$ dB, rendendola estremamente sicura e robusta, sacrificando in 
+parte le prestazioni dinamiche e la velocità di risposta.
 
 \subsection*{Introduzione del Filtro Notch}
 Nei test successivi con l'aumento delle prestazioni, l'analisi in frequenza ha reso 
@@ -349,15 +361,19 @@ Valori utilizzati sono stati:
 \newpage
 \section{Taratura Ottimale}
 
-L'approccio manuale descritto in precedenza si è rivelato fondamentale per delineare i limiti della dinamica reale: ha permesso di isolare le bande critiche, quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia dell'intero sistema. 
+L'approccio manuale descritto in precedenza si è rivelato fondamentale per delineare i limiti della dinamica reale: ha permesso di isolare le bande critiche, 
+quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia dell'intero sistema. 
 
-Al fine di superare tali limiti, è stata effettuata una ri-identificazione del giunto J3 utilizzando un segnale chirp con ampiezza ridotta a 10, frequenza da $0.1$ a $300$ Hz, durata estesa a 120 s e incrementando l'ordine del modello a 4. Scegliendo pesi adeguati (banda $[13, 1300]$ rad/s), è stato possibile ottenere una stima molto più affidabile della dinamica, che ha abilitato una pulsazione target $\omega_c = 100$ rad/s.
+Al fine di superare tali limiti, è stata effettuata una ri-identificazione del giunto J3 utilizzando un segnale chirp con ampiezza ridotta a 10, 
+frequenza da $0.1$ a $300$ Hz, durata estesa a 120 s e mantenendo l'ordine del modello a 4. Scegliendo pesi adeguati (banda $[13, 1300]$ rad/s),
+ è stato possibile ottenere una stima molto più affidabile della dinamica, che ha abilitato una pulsazione target $\omega_c = 100$ rad/s.
 
-Risolta l'incongruenza su J3, il problema di controllo per l'anello interno di velocità è stato riformulato sfruttando lo script \texttt{taratura\_ottima.mlx}. Quest'ultimo modella la taratura come un'ottimizzazione vincolata nel dominio della frequenza, imponendo restrizioni esplicite su:
+Risolta l'incongruenza su J3, il problema di controllo per l'anello interno di velocità è stato riformulato sfruttando lo script \texttt{taratura\_ottima.mlx}. 
+Quest'ultimo modella la taratura come un'ottimizzazione vincolata nel dominio della frequenza, imponendo restrizioni esplicite su:
 \begin{itemize}
     \item \textbf{Robustezza:} imposizione di un limite sul picco della funzione di sensibilità ($M_s \le 1.6$) e di un Margine di Fase minimo desiderato ($PM \ge 55^\circ$).
-    \item \textbf{Reiezione ai disturbi:} attenuazione richiesta a bassa frequenza (limite $\le 0.15$ per $\omega \le 2$ rad/s).
-    \item \textbf{Attenuazione del rumore:} abbattimento del guadagno ad alta frequenza (limite $\le 0.1$ per $\omega \ge 400$ rad/s).
+    \item \textbf{Reiezione ai disturbi:} attenuazione richiesta a bassa frequenza (limite $\le 0.15$ $\approx 16.5 dB$ per $\omega \le 2$ rad/s).
+    \item \textbf{Attenuazione del rumore:} abbattimento del guadagno ad alta frequenza (limite $\le 0.1$ $\approx 20 dB$ per $\omega \ge 400$ rad/s).
 \end{itemize}
 
 Sono state esplorate molteplici configurazioni per innalzare la banda passante, riassunte nella Tabella \ref{tab:taratura_ottimale}. Partendo da prove esplorative (T0, T1, T2), i parametri di ottimizzazione e degli smorzamenti dei filtri notch ($\xi_p$) sono stati raffinati fino a giungere alla configurazione finale (T3, T4, T6).
@@ -424,7 +440,86 @@ Nella Figura \ref{fig:bode_ottima} vengono mostrati i diagrammi di Bode in anell
 \end{figure}
 
 \section{Simulazioni e confronto prestazionale}
+Nella fase finale del progetto è stata analizzata l'evoluzione delle prestazioni del sistema in simulazione, valutando l'impatto dell'ottimizzazione dei parametri di controllo e dei limiti cinematici. Nella Tabella \ref{tab:prestazioni} sono riassunti i risultati ottenuti partendo da una configurazione di base estremamente conservativa (M0) fino a configurazioni via via più aggressive, culminate nel test finale (M5).
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \caption{Evoluzione delle prestazioni al variare dei parametri cinematici e di controllo.}
+    \label{tab:prestazioni}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{lcccccc}
+    \toprule
+    \textbf{Test} & $\omega_c$ [rad/s] & $v_{\max}$ [m/s] & $a_{\max}$ [m/s$^2$] & \textbf{Tempo ciclo [s]} & \textbf{MAE Posizione} & \textbf{MAE Velocità} \\
+    \midrule
+    M0 & 30 & [0.5, 0.5, 0.5] & [0.2, 0.2, 0.2] & 63.14 & [0.003, 0.001, 0.001] & [0.002, 0.024, 0.024] \\
+    M1 & [200, 200, 50] & [3.5, 3.5, 2.5] & [1.0, 1.0, 1.0] & 25.63 & [0.006, 0.001, 0.001] & [0.002, 0.024, 0.024] \\
+    M2 & [200, 200, 50] & [4.5, 4.5, 2.5] & [2.0, 2.0, 1.0] & 25.70 & [0.006, 0.002, 0.002] & [0.003, 0.026, 0.025] \\
+    M3 & [200, 200, 50] & [5.0, 5.0, 2.5] & [2.5, 2.5, 1.0] & 23.90 & [0.007, 0.002, 0.002] & [0.003, 0.026, 0.025] \\
+    M4 & [200, 200, 100] & [5.0, 5.0, 5.0] & [2.5, 2.5, 2.5] & 22.26 & [0.007, 0.002, 0.002] & [0.033, 0.027, 0.026] \\
+    M5 & [200, 200, 100] & [15.0, 15.0, 15.0] & [14.0, 14.0, 14.0] & 12.93 & [0.011, 0.003, 0.004] & [0.082, 0.044, 0.035] \\
+    \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+Il confronto evidenzia un miglioramento molto marcato: dalla baseline M0 si arriva alla prova M5 con un tempo ciclo pari a $12.93$ s, 
+ottenendo una riduzione del tempo di esecuzione di circa il $79.5\%$. Tale risultato dimostra che la combinazione di una taratura più aggressiva, 
+filtri notch, feedforward dinamico e una nuova identificazione ha permesso di aumentare le prestazioni in modo sostanziale.
+
+Come atteso, l'incremento delle richieste dinamiche comporta un fisiologico aumento degli errori di inseguimento (MAE). 
+Il MAE di posizione massimo su J1 passa da $0.003$ a $0.011$, mentre l'errore di velocità cresce in modo più evidente (da $0.002$ a $0.082$), 
+coerentemente con le elevate accelerazioni e i rapidi transitori imposti. Tuttavia, il sistema lavora sempre 
+all'interno di margini di tolleranza accettabili: in nessuno dei test effettuati si è verificata la caduta di un birillo (collisione con ostacoli),
+ dimostrando che il controllo mantiene un'accuratezza spaziale sufficiente per portare a termine il task con successo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{IMG/Taratura_Ottimale/M5_traject_final_velocity.png}
+    \caption{Andamento di posizione, velocità, coppia e accelerazione stimata per la configurazione finale M5. 
+    Si notano i rapidi transitori e gli elevati picchi di coppia richiesti dalla traiettoria aggressiva.}
+    \label{fig:m5_segnali}
+\end{figure}
+
+L'andamento dei segnali filtrati per la prova M5 (Figura \ref{fig:m5_segnali}) illustra chiaramente il regime fortemente sollecitato della dinamica:
+\begin{itemize}
+    \item \textbf{J1:} presenta un moto alternato molto rapido, con picchi di coppia attuata che raggiungono circa i $\pm 50$ Nm.
+    \item \textbf{J2:} mostra una sequenza di accelerazioni e decelerazioni concentrate nella parte centrale della traiettoria, 
+    con picchi di coppia dell'ordine di $\pm 30$ Nm.
+    \item \textbf{J3:} mantiene una componente quasi statica importante legata al bilanciamento della gravità lungo l'asse verticale, 
+    sovrapposta a picchi dinamici durante i transitori di salita e discesa.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{IMG/Taratura_Ottimale/M5_traject_final_Torque.png}
+    \caption{Confronto tra la coppia misurata filtrata e la coppia stimata dal modello dinamico (Feedforward). 
+    L'elevato grado di sovrapposizione conferma l'accuratezza dell'identificazione.}
+    \label{fig:m5_coppia}
+\end{figure}
+
+Inoltre, analizzando il confronto tra la coppia reale misurata e quella ricostruita dal modello (Figura \ref{fig:m5_coppia}), 
+il risultato appare ottimo: le due curve si sovrappongono in modo molto accurato sia nei tratti a regime sia durante 
+i transitori più rapidi per tutti e tre i giunti. Questo evidenzia come i contributi inerziali e gravitazionali siano stati 
+identificati con estrema coerenza. In particolar modo per il giunto J3, precedentemente individuato come elemento critico, 
+il modello riesce ora a descriverne correttamente la dinamica, validando la scelta di ripetere l'identificazione.
 
 \section{Configurazione finale e conclusioni}
+Nell'ultima fase del progetto è stato validato definitivamente il modello dinamico identificato, confrontando la coppia misurata 
+e filtrata con la coppia stimata dal modello stesso. L'ottima sovrapposizione osservata per tutti e tre i giunti, 
+specialmente nei tratti ad alta accelerazione dove i contributi inerziali dominano, conferma che i parametri dinamici ottenuti 
+descrivono in maniera fedele il comportamento reale del sistema. Tali parametri si sono rivelati fondamentali per implementare 
+un'efficace compensazione di feedforward, alleggerendo il carico di lavoro del regolatore in retroazione.
+
+La configurazione finale selezionata (M5) sfrutta al massimo le potenzialità della taratura ottima ottenuta, impiegando i seguenti parametri:
+\begin{itemize}
+    \item \textbf{Banda passante target ($\omega_c$):} $[200, 200, 100]$ rad/s.
+    \item \textbf{Velocità massime ($v_{\max}$):} $[15.0, 15.0, 15.0]$ m/s.
+    \item \textbf{Accelerazioni massime ($a_{\max}$):} $[14.0, 14.0, 14.0]$ m/s$^2$.
+\end{itemize}
+
+Con questi parametri operativi, il sistema è stato in grado di completare il percorso a ostacoli con un tempo ciclo di \textbf{12.93 s}, registrando una drastica riduzione (circa il 79.5\%) rispetto alla tempistica della configurazione di partenza. Nonostante le elevate sollecitazioni dinamiche abbiano comportato un aumento misurabile degli errori medi assoluti (MAE di posizione pari a $[0.011, 0.003, 0.004]$ e MAE di velocità pari a $[0.082, 0.044, 0.035]$), tali scostamenti non hanno mai compromesso la stabilità o la sicurezza del sistema. La precisione spaziale si è mantenuta ampiamente nei limiti necessari a evitare collisioni e la caduta dei birilli presenti lungo la traiettoria.
+
+In conclusione, l'approccio iterativo adottato, che ha combinato l'ottimizzazione del loop shaping nel dominio della frequenza, l'introduzione mirata di filtri notch per la gestione delle risonanze e una corretta modellazione della dinamica in feedforward, si è dimostrato pienamente vincente, raggiungendo il miglior compromesso possibile tra tempi di esecuzione e accuratezza di inseguimento.
 
 \end{document}

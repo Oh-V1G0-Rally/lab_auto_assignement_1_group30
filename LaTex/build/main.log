@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.3)  9 MAY 2026 20:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.3)  12 MAY 2026 12:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -376,39 +376,50 @@ File: IMG/taratura_manuale/Calcolo_ParDin_1B.png Graphic file (type png)
 Package pdftex.def Info: IMG/taratura_manuale/Calcolo_ParDin_1B.png  used on input line 313.
 (pdftex.def)             Requested size: 243.098pt x 112.56252pt.
  [3] [4 <./IMG/taratura_manuale/Calcolo_ParDin_1A.png> <./IMG/taratura_manuale/Calcolo_ParDin_1B.png>]
-<IMG/Taratura_Ottimale/TarOtt_T3_J1.png, id=68, 1681.28125pt x 776.9025pt>
+<IMG/Taratura_Ottimale/TarOtt_T3_J1.png, id=69, 1681.28125pt x 776.9025pt>
 File: IMG/Taratura_Ottimale/TarOtt_T3_J1.png Graphic file (type png)
 <use IMG/Taratura_Ottimale/TarOtt_T3_J1.png>
-Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T3_J1.png  used on input line 403.
+Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T3_J1.png  used on input line 419.
 (pdftex.def)             Requested size: 303.87831pt x 140.41728pt.
-<IMG/Taratura_Ottimale/TarOtt_T4_J2.png, id=69, 1672.2475pt x 776.9025pt>
+<IMG/Taratura_Ottimale/TarOtt_T4_J2.png, id=70, 1672.2475pt x 776.9025pt>
 File: IMG/Taratura_Ottimale/TarOtt_T4_J2.png Graphic file (type png)
 <use IMG/Taratura_Ottimale/TarOtt_T4_J2.png>
-Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T4_J2.png  used on input line 411.
+Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T4_J2.png  used on input line 427.
 (pdftex.def)             Requested size: 303.87831pt x 141.17598pt.
-<IMG/Taratura_Ottimale/TarOtt_T6_J3.png, id=70, 1692.3225pt x 771.88374pt>
+<IMG/Taratura_Ottimale/TarOtt_T6_J3.png, id=71, 1692.3225pt x 771.88374pt>
 File: IMG/Taratura_Ottimale/TarOtt_T6_J3.png Graphic file (type png)
 <use IMG/Taratura_Ottimale/TarOtt_T6_J3.png>
-Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T6_J3.png  used on input line 419.
+Package pdftex.def Info: IMG/Taratura_Ottimale/TarOtt_T6_J3.png  used on input line 435.
 (pdftex.def)             Requested size: 303.87831pt x 138.5915pt.
- [5] [6 <./IMG/Taratura_Ottimale/TarOtt_T3_J1.png> <./IMG/Taratura_Ottimale/TarOtt_T4_J2.png> <./IMG/Taratura_Ottimale/TarOtt_T6_J3.png>] (c:/Users\Aless\Documents\GitHub\labauto_assignment_1_2026\LaTex\build\main.aux)
+ [5] [6 <./IMG/Taratura_Ottimale/TarOtt_T3_J1.png> <./IMG/Taratura_Ottimale/TarOtt_T4_J2.png> <./IMG/Taratura_Ottimale/TarOtt_T6_J3.png>]
+<IMG/Taratura_Ottimale/M5_traject_final_velocity.png, id=84, 1586.92876pt x 725.71124pt>
+File: IMG/Taratura_Ottimale/M5_traject_final_velocity.png Graphic file (type png)
+<use IMG/Taratura_Ottimale/M5_traject_final_velocity.png>
+Package pdftex.def Info: IMG/Taratura_Ottimale/M5_traject_final_velocity.png  used on input line 478.
+(pdftex.def)             Requested size: 430.49298pt x 196.86375pt.
+<IMG/Taratura_Ottimale/M5_traject_final_Torque.png, id=85, 1644.1425pt x 751.80875pt>
+File: IMG/Taratura_Ottimale/M5_traject_final_Torque.png Graphic file (type png)
+<use IMG/Taratura_Ottimale/M5_traject_final_Torque.png>
+Package pdftex.def Info: IMG/Taratura_Ottimale/M5_traject_final_Torque.png  used on input line 495.
+(pdftex.def)             Requested size: 430.49298pt x 196.84225pt.
+ [7 <./IMG/Taratura_Ottimale/M5_traject_final_velocity.png>] [8 <./IMG/Taratura_Ottimale/M5_traject_final_Torque.png>] (c:/Users\Aless\Documents\GitHub\labauto_assignment_1_2026\LaTex\build\main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 6160 strings out of 467871
- 105298 string characters out of 5418377
- 537766 words of memory out of 5000000
- 34980 multiletter control sequences out of 15000+600000
+ 6177 strings out of 467871
+ 106142 string characters out of 5418377
+ 538838 words of memory out of 5000000
+ 34997 multiletter control sequences out of 15000+600000
  641950 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,526b,523s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,12n,65p,800b,523s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt0900.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx0900.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\Aless\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/Aless/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on c:/Users\Aless\Documents\GitHub\labauto_assignment_1_2026\LaTex\build\main.pdf (7 pages, 1252233 bytes).
+Output written on c:/Users\Aless\Documents\GitHub\labauto_assignment_1_2026\LaTex\build\main.pdf (9 pages, 1435155 bytes).
 PDF statistics:
- 526 PDF objects out of 1000 (max. 8388607)
+ 556 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 
