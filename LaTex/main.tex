@@ -85,7 +85,7 @@ possibile senza collisioni.
     \item identificazione in frequenza dei modelli dinamici dei tre giunti mediante test con segnale chirp;
     \item validazione dei modelli, confrontando la risposta identificata con i dati simulati;
     \item tuning del controllo in cascata, composto da anello interno di velocità e anello esterno di posizione;
-    \item identificazione di soluzioni per attenuare del rumore e risonanze;
+    \item identificazione di soluzioni per attenuare il rumore e risonanze;
     \item integrare la compensazione feedforward tramite parametri dinamici identificati;
     \item aumentare progressivamente velocità e accelerazione mantenendo stabilità,
     accuratezza e robustezza;
@@ -104,7 +104,7 @@ e criteri di scelta della configurazione finale.
 
 L'identificazione dei modelli dei tre giunti è avvenuta attraverso prove in frequenza con segnale chirp. 
 L'ampiezza del chirp, insieme alla banda di frequenza e alla durata della prova, rappresentano i 
-parametri che abbiamo usato per identificare le prove di identificazione.
+parametri che ho usato per eseguire le prove di identificazione.
 
 La validazione è stata fatta confrontando la risposta in frequenza del modello 
 identificato con la funzione di Risposta in Frequenza sperimentale ottenuta da prove indipendenti, analizzando la
@@ -177,11 +177,12 @@ Lo svolgimento delle prove ha richiesto la definizione di una banda di frequenze
  di risonanza e anti-risonanza. 
 Posizionando i pesi almeno una decade al di sotto e al di sopra di questi picchi, è stato possibile ottenere una stima più accurata 
 della dinamica del sistema. Nelle prove successive è stata resa più selettiva la finestra di pesatura, in modo da identificare 
-una banda passante utile per la tratura del controllore, per ottenere $\omega_c$ migliore.
+una banda passante utile per la taratura del controllore, per ottenere una $\omega_c$ migliore.
 
 In prima battuta, i modelli ottenuti nei Test T01, T02 e T03 presentavano una buona coerenza, pur evidenziando un aumento dell'incertezza 
-in corrispondenza delle frequenze di risonanza. In particolare, come si osserverà nella fase di validazione, 
-il modello iniziale del giunto J3 (T03) risultava inadeguato nel range delle basse frequenze. 
+in corrispondenza delle frequenze di anti-risonanza. 
+% In particolare, come si osserverà nella fase di validazione, 
+% il modello iniziale del giunto J3 (T03) risultava inadeguato nel range delle basse frequenze (fig:\ref{fig:j3_a}). 
 
 Dalle nuove identificazioni, convalidate con il test sul giunto (T04). 
 Si è proceduto a ridurre l'ampiezza dell'ingresso, risultata eccessiva rispetto a quella dei giunti precedenti, 
@@ -192,97 +193,107 @@ Nella seguenti rappresentazioni (Figura \ref{fig:valid_j1_j2}) si possono osserv
 per i giunti J1 e J2.
 
 \begin{figure}[H]
-    \makebox[\linewidth][c]{
-        % Riga J1
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J1_1_valid.png}
-            \caption{J1 - Validazione 1}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J1_2_valid.png}
-            \caption{J1 - Validazione 2}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J1_3_valid.png}
-            \caption{J1 - Validazione 3}
-        \end{subfigure}
-    }
+    \centering
+
+    % Riga 1: Validazione 1
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J1_1_valid.png}
+        \caption{J1 -- Validazione 1}
+        \label{fig:j1_valid_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J2_1_valid.png}
+        \caption{J2 -- Validazione 1}
+        \label{fig:j2_valid_1}
+    \end{subfigure}
+
+    \vspace{0.35cm}
+
+    % Riga 2: Validazione 2
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J1_2_valid.png}
+        \caption{J1 -- Validazione 2}
+        \label{fig:j1_valid_2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J2_2_valid.png}
+        \caption{J2 -- Validazione 2}
+        \label{fig:j2_valid_2}
+    \end{subfigure}
+
+    \vspace{0.35cm}
+
+    % Riga 3: Validazione 3
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J1_3_valid.png}
+        \caption{J1 -- Validazione 3}
+        \label{fig:j1_valid_3}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J2_3_valid.png}
+        \caption{J2 -- Validazione 3}
+        \label{fig:j2_valid_3}
+    \end{subfigure}
     
-    \vspace{0.3cm}
-    
-    \makebox[\linewidth][c]{
-        % Riga J2
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J2_1_valid.png}
-            \caption{J2 - Validazione 1}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J2_2_valid.png}
-            \caption{J2 - Validazione 2}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J2_3_valid.png}
-            \caption{J2 - Validazione 3}
-        \end{subfigure}
-    }
-    
-    \caption{Validazione per J1 e J2 in differenti punti di lavoro.}
+    \caption{Risultati di validazione per i giunti J1 e J2 in differenti punti di lavoro. A sinistra sono riportate le validazioni del giunto J1, mentre a destra quelle del giunto J2.}
     \label{fig:valid_j1_j2}
 \end{figure}
 
 Per il giunto J3 (Figura \ref{fig:valid_j3}) andando a forzare una validazione su tutto lo spettro del chirp 
-utilizzando il modello iniziale (T03), si riscontra una grave incongruenza tra la predizione del modello e 
+utilizzando il modello iniziale (T03), si riscontra una incongruenza tra la predizione del modello e 
 l'effettiva risposta del sistema (fig:\ref{fig:valid_j3}a). 
-Utilizzando il modello ottenuto con il (T04)  (fig:\ref{fig:valid_j3}a, \ref{fig:valid_j3}b), è possibile osservare il livello di confidenza risulta peggiore.
-Tuttavia, l'andamento del modello teorico segue meglio la risposta reale del sistema, 
+Utilizzando il modello ottenuto con il (T04)  (fig:\ref{fig:valid_j3}a, \ref{fig:valid_j3}b)
+l'andamento del modello teorico segue meglio la risposta reale del sistema, pur mostrando una banda di confidenza 
+più ampia in alcune zone dello spettro.
 giustificando la scelta di utilizzare quest'ultimo modello per le successive fasi di controllo.
 
 \begin{figure}[H]
-    \makebox[\linewidth][c]{
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J3_1_valid_1.png}
-            \caption{J3 (T03)}
-            \label{fig:j3_a}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J3_2_valid_1.png}
-            \caption{J3 (T04)}
-            \label{fig:j3_b}
-        \end{subfigure}
-        \hspace{0.015\textwidth}
-        \begin{subfigure}[b]{0.36\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{IMG/ident_valid/J3_2_valid_2.png}
-            \caption{J3 (T04)}
-            \label{fig:j3_c}
-        \end{subfigure}
-    }
+    \centering
+
+    % Prima riga: confronto T03 vs T04
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J3_1_valid_1.png}
+        \caption{J3 -- Modello T03}
+        \label{fig:j3_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J3_2_valid_1.png}
+        \caption{J3 -- Modello T04}
+        \label{fig:j3_b}
+    \end{subfigure}
+
+    \vspace{0.35cm}
+
+    % Seconda riga: validazione aggiuntiva T04
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{IMG/ident_valid/J3_2_valid_2.png}
+        \caption{J3 -- Modello T04}
+        \label{fig:j3_c}
+    \end{subfigure}
     
-    \caption{Confronto sui test di validazione del J3. Nella fig.(\ref{fig:j3_a}) disallineamento sul modello T03. 
-    Nelle fig.(\ref{fig:j3_b}, \ref{fig:j3_c}) tracking nominale del modello T04 migliorato.}
+    \caption{Confronto dei test di validazione del giunto J3. In \subref{fig:j3_a} si osserva il disallineamento ottenuto con il modello T03, mentre in \subref{fig:j3_b} e \subref{fig:j3_c} il modello T04 mostra un migliore inseguimento della risposta reale del sistema.}
     \label{fig:valid_j3}
 \end{figure}
 
-\newpage
 \section{Taratura Manuale, Filtro Notch e Feedforward}
 Il sistema presenta una dinamica associabile ad un robot rigido, pur includendo attuatori elastici in serie,
  quindi non può essere considerato un sistema perfettamente rigido. 
 Attraverso la risposta in frequenza si osservano i picchi di risonanza principalmente 
 in alte frequenze, si deduce che quindi il sistema presenta un'\textbf{alta rigidezza} meccanica. 
-Il modello dinamico è estremamente affidabile, poiché i parametri identificati 
+Il modello dinamico è affidabile, poiché i parametri identificati 
 (come masse e inerzie) hanno un impatto diretto e reale, sebbene permanga una certa sensibilità a 
 eventuali attriti o backlash alle basse velocità.
 Ogni giunto usa un controllore in cui ritroviamo un'architettura in cascata, 
@@ -328,7 +339,7 @@ per il primo test funzionale.
     \end{tabular}
 \end{table}
 
-I risultati di questa prima prova sono visibili in Figura \ref{fig:par_din_manuale}. 
+I risultati di questa prima prova sono visibili in (fig:\ref{fig:par_din_manuale}). 
 Avendo imposto limiti di velocità molto bassi, i segnali di velocità acquisiti risultavano 
 di entità ridotta. Di conseguenza, il rapporto segnale/rumore si è rivelato critico: 
 il segnale grezzo riportava una componente di disturbo marcata. 
@@ -377,11 +388,11 @@ Nella valutazione della robustezza delle tarature i due principali indicatori di
     se $> 20$ dB indicano una robustezza eccellente. 
 \end{itemize}
 La taratura manuale attuale preseta un PM $\approx 86^\circ$ e un GM $\approx 30$ dB, rendendola estremamente sicura e robusta, sacrificando in 
-parte le prestazioni dinamiche e la velocità di risposta.
+parte le prestazioni dinamiche e la velocità di risposta, e facendomi capire il grande margine disponibile per rendere il controllo più aggressivo.
 
 \subsection*{Introduzione del Filtro Notch}
 Nei test successivi con l'aumento delle prestazioni, l'analisi in frequenza ha reso 
-palese l'effetto delle risonanze. Per mitigare il problema è stato introdotto un 
+significante l'effetto delle risonanze. Per mitigare il problema è stato introdotto un 
 \textbf{Filtro Notch} nel punto più sensibile al contenuto ad alta frequenza ovvero usando 
 nel controllore l'attributo (\texttt{filters\_on\_derivative\_error}).
 
@@ -394,11 +405,10 @@ Valori utilizzati sono stati:
     \item \textbf{J3:} $\omega_n \approx 715$ rad/s, $\xi_z \approx 0.1$, $\xi_p \approx 0.4$
 \end{itemize}
 
-\newpage
 \section{Taratura Ottimale}
 
 L'approccio manuale descritto in precedenza si è rivelato fondamentale per delineare i limiti della dinamica reale: ha permesso di isolare le bande critiche, 
-quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia dell'intero sistema. 
+quantificare l'esigenza dei filtri notch e individuare nel modello del giunto J3 il vero collo di bottiglia. 
 
 Al fine di superare tali limiti, è stata effettuata una ri-identificazione del giunto J3 utilizzando un segnale chirp con ampiezza ridotta a 10, 
 frequenza da $0.1$ a $300$ Hz, durata estesa a 120 s e mantenendo l'ordine del modello a 4. Scegliendo pesi adeguati (banda $[13, 1300]$ rad/s),
@@ -566,12 +576,15 @@ L'aspetto importante da notare è la correlazione tra le diverse tecniche implem
  taratura del feedback molto più aggressiva. Il controllore ad anello chiuso quindi principalmente si occupa 
 di reiezione dei disturbi e delle incertezze di modello, compito facilitato dall'azione stabilizzante dei filtri notch.
 
-Grazie a questa architettura, la configurazione finale (M5) ha permesso di spingere il sistema verso 
-i limiti cinematici dei giunti, completando il percorso in soli \textbf{12.93 s} e registrando una drastica 
-riduzione del tempo ciclo (circa il 79.5\%) rispetto alla configurazione di partenza. 
+Grazie a questa architettura, la configurazione finale (M5) ha permesso il completamento del percorso in soli \textbf{12.93 s} 
+e registrando una drastica riduzione del tempo ciclo (circa il 79.5\%) rispetto alla configurazione di partenza. 
 L'inevitabile aumento degli errori di inseguimento, dovuto alle elevate sollecitazioni dinamiche,
 è stato gestito senza mai compromettere la stabilità. Il sistema ha mostrato una precisione spaziale ampiamente 
 sufficiente a evitare collisioni, portando a termine la routine in totale sicurezza.
+
+Avrei potuto spingere ancora di più il controllore, in quanto nella configuraizone finale sui tre giunti ho sempre avuto 
+un margine di fase e guadagno molto robusti, però ho preferito rimanere conservativo e raggiungere un ottimo risultato
+con un controllore affidabile, piuttosto che rischiare di compromettere la stabilità per guadagni più elevati.
 
 In conclusione, l'approccio combinato che unisce l'identificazione in frequenza, la compensazione con feedforward, filtri
 e la taratura ottima (guidata dalle conoscenze acquisite nelle fasi manuali) ha permesso di ottener un buon compromesso.
